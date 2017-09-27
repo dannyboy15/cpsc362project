@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Titanimite</string>
+    <string name="welcome_text">Welcome to Titanimite. Please fill out the form to get started.</string>
+    <string name="tos_text">By checking the box you agree to our Terms of Service. Click here to read tos</string>
+</resources>
