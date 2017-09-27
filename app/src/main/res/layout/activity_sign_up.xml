@@ -46,7 +46,7 @@
         android:layout_margin="10dp"
         android:ems="10"
         android:hint="Email"
-        android:inputType="text" />
+        android:inputType="text|textEmailAddress" />
 
     <TextView
         android:id="@+id/tosTextView"

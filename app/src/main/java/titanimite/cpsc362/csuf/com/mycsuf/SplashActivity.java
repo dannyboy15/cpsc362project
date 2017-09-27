@@ -24,7 +24,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private boolean isLoggedIn() {
-        SharedPreferences pref = getSharedPreferences("MyClockinPref", Context.MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences("TitanimitePref", Context.MODE_PRIVATE);
         return pref.getBoolean("is_logged_in", false);
     }
 }
