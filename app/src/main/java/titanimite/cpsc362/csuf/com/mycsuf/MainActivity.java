@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         getSampleData();
 
-        adapter = new ClassAdapter(this, allClasses);
+        adapter = new ClassAdapter(this, getApplicationContext(), allClasses);
         listView.setAdapter(adapter);
 
 //        addClassMsg = (TextView)findViewById(R.id.addClassMsgTextView);

@@ -2,6 +2,7 @@ package titanimite.cpsc362.csuf.com.mycsuf;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 /**
  * Created by Daniel on 10/2/17.
  */
@@ -25,6 +28,7 @@ public class ClassAdapter extends BaseAdapter implements View.OnClickListener {
 
     /*********** Declare Used Variables *********/
     private Activity activity;
+    private Context context;
     private JSONArray data;
     private static LayoutInflater inflater = null;
     JSONObject tempValues = null;
@@ -33,10 +37,11 @@ public class ClassAdapter extends BaseAdapter implements View.OnClickListener {
 
 
     /*************  CustomAdapter Constructor *****************/
-    public ClassAdapter(Activity a, JSONArray d) {
+    public ClassAdapter(Activity a, Context c, JSONArray d) {
 
         /********** Take passed values **********/
         activity = a;
+        context = c;
         data = d;
 
         /***********  Layout inflator to call external xml layout () ***********/
@@ -127,6 +132,13 @@ public class ClassAdapter extends BaseAdapter implements View.OnClickListener {
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
+
+        Intent intent = new Intent(context, ClassInfoFull.class);
+        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+        intent.putextra("your_extra","your_class_value");
+        context.startActivity(intent);
+
+//        finish();
     }
 
     /********* Create a holder Class to contain inflated xml file elements *********/
