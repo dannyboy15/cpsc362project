@@ -75,6 +75,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private TextView mSignUpTextView;
 
     private SessionManager session;
+    private DBHelper database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +86,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //        session = getIntent().getExtras().getParcelable("session");
 //        session.setNewActivityContext(getApplicationContext());
         Log.i("Login Activity", session.toString());
+
+        database = DBHelper.getInstance(getApplicationContext());
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -345,6 +348,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mEmail;
         private final String mPassword;
+        private long id;
 
         UserLoginTask(String email, String password) {
             mEmail = email;
@@ -362,26 +366,34 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
 
-            for (int i = 0; i < SAVED_EMAILS.length(); i++) {
-                JSONObject jsEmail = null;
-                String em = "";
-                try {
-                    jsEmail = SAVED_EMAILS.getJSONObject(i);
-                    em = jsEmail.getString("email");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+//            id = database.checkUserEmail(mEmail);
+            id = database.checkUserEmailAndPass(mEmail, mPassword);
+            if (id == -1)
+                return false;
+            else
+                return true;
 
-                if (em.equals(mEmail)) {
-                    String p = "";
-                    try {
-                        p = jsEmail.getString("pass");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    return p.equals(mPassword);
-                }
-            }
+
+//            for (int i = 0; i < SAVED_EMAILS.length(); i++) {
+//                JSONObject jsEmail = null;
+//                String em = "";
+//                try {
+//                    jsEmail = SAVED_EMAILS.getJSONObject(i);
+//                    em = jsEmail.getString("email");
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                if (em.equals(mEmail)) {
+//                    String p = "";
+//                    try {
+//                        p = jsEmail.getString("pass");
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                    return p.equals(mPassword);
+//                }
+//            }
 
 //            for (String credential : DUMMY_CREDENTIALS) {
 //                String[] pieces = credential.split(":");
@@ -392,7 +404,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //            }
 
             // TODO: register the new account here.
-            return false;
+//            return false;
         }
 
         @Override
@@ -401,11 +413,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                SharedPreferences pref = getApplicationContext().getSharedPreferences("TitanimitePref", MODE_PRIVATE);
-                SharedPreferences.Editor editor = pref.edit();
-
-                editor.putBoolean("is_logged_in", true);
-                editor.commit();
+                StudentUser student = database.getStudentUser(id);
+                session.createLoginSession(student);
+                Log.i("Login Activity", student.toString());
+//                SharedPreferences pref = getApplicationContext().getSharedPreferences("TitanimitePref", MODE_PRIVATE);
+//                SharedPreferences.Editor editor = pref.edit();
+//
+//                editor.putBoolean("is_logged_in", true);
+//                editor.commit();
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);

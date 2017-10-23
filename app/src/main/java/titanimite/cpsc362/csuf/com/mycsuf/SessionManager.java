@@ -56,6 +56,8 @@ public class SessionManager implements Parcelable {
 
     private String email;
 
+    private StudentUser student;
+
     public static synchronized SessionManager getInstance(Context context) {
 
         // Use the application context, which will ensure that you
@@ -119,6 +121,30 @@ public class SessionManager implements Parcelable {
         editor.commit();
     }
 
+    public void createLoginSession(StudentUser s){
+        // Storing login value as TRUE
+        editor.putBoolean(IS_LOGIN, true);
+
+        // Storing name in pref
+        editor.putInt(KEY_SU_ID, s.getId());
+
+        // Storing name in pref
+        editor.putString(KEY_FIRST_NAME, s.getFirstName());
+
+        // Storing name in pref
+        editor.putString(KEY_LAST_NAME, s.getLastName());
+
+        // Storing email in pref
+        editor.putString(KEY_EMAIL, s.getEmail());
+
+        // commit changes
+        editor.commit();
+
+        student = s;
+
+        update();
+    }
+
     public HashMap<String, String> getUserDetails(){
         HashMap<String, String> user = new HashMap<String, String>();
         // user name
@@ -174,6 +200,10 @@ public class SessionManager implements Parcelable {
 //        mContext.startActivity(i);
     }
 
+    public void update () {
+
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -195,7 +225,7 @@ public class SessionManager implements Parcelable {
     }
 
     public String getFirstName() {
-        return firstName;
+        return pref.getString(KEY_FIRST_NAME, "");
     }
 
     public void setFirstName(String firstName) {
@@ -203,7 +233,7 @@ public class SessionManager implements Parcelable {
     }
 
     public String getLastName() {
-        return lastName;
+        return pref.getString(KEY_LAST_NAME, "");
     }
 
     public void setLastName(String lastName) {
@@ -211,7 +241,7 @@ public class SessionManager implements Parcelable {
     }
 
     public String getEmail() {
-        return email;
+        return pref.getString(KEY_EMAIL, "");
     }
 
     public void setEmail(String email) {

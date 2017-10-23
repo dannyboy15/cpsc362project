@@ -14,12 +14,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.crypto.spec.DHGenParameterSpec;
+
 public class SignUpActivity extends AppCompatActivity {
 
     private EditText firstName, lastName, major, email, pass, verify;
     private CheckBox tosAgree;
     private Button submit;
     private SessionManager session;
+    private DBHelper database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,7 @@ public class SignUpActivity extends AppCompatActivity {
         session = SessionManager.getInstance(getApplicationContext());
 //        session = (SessionManager) getIntent().getExtras().getParcelable("session");
 //        session.setNewActivityContext(getApplicationContext());
+        database = DBHelper.getInstance(getApplicationContext());
 
         firstName = (EditText) findViewById(R.id.firstNameTextEdit);
         lastName = (EditText) findViewById(R.id.lastNameTextEdit);
@@ -53,7 +57,8 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(isFieldsFilledOut()) {
-                    updateSharedPreferenes();
+//                    updateSharedPreferenes();
+                    createUser();
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.putExtra("session", session);
                     startActivity(intent);
@@ -61,6 +66,24 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void createUser() {
+        // getFieldValues();
+        String firstNameTxt = firstName.getText().toString();
+        String lastNameTxt = lastName.getText().toString();
+        String majorTxt = major.getText().toString();
+        String emailTxt = email.getText().toString();
+        String passTxt = pass.getText().toString();
+        boolean tosAgreeVal = tosAgree.isChecked();
+
+        StudentUser user = new StudentUser(firstNameTxt, lastNameTxt, majorTxt, emailTxt, passTxt);
+        long id = database.insertStudentUser(user);
+
+        user.setId((int)id);
+        Log.i("SU Activity", user.toString());
+        session.createLoginSession(user);
+
     }
 
     private void updateSharedPreferenes() {
@@ -127,8 +150,18 @@ public class SignUpActivity extends AppCompatActivity {
             email.setError("Your email is required!");
             isFilledOut = false;
         }
+        else if (isEmailTaken(email.getText().toString().trim())){
+            email.setError("This email is already taken");
+            isFilledOut = false;
+        }
 
         return isFilledOut;
+    }
+
+    private boolean isEmailTaken(String email) {
+        long id = database.checkUserEmail(email);
+
+        return id != -1;
     }
 
     private boolean isPassSame() {

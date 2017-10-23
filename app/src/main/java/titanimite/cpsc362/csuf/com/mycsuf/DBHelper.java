@@ -145,16 +145,44 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public long checkUserEmail(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String selectQuery = "SELECT " + KEY_SU_ID + " FROM " + TABLE_STUDENT_USER + " WHERE "
-                + KEY_SU_EMAIL + " = " + email;
+        String selectQuery = "SELECT * FROM " + TABLE_STUDENT_USER + " WHERE "
+                + KEY_SU_EMAIL + " = \'" + email + "\';";
+        // SELECT TOP 1 1 FROM products WHERE id = 'some value';
 
         Log.e(LOG, selectQuery);
 
         Cursor c = db.rawQuery(selectQuery, null);
 
-        if (c != null) {
+        Log.i(LOG, "Count: " + String.valueOf(c.getCount()));
+        if (c != null && c.getCount()>0) {
             c.moveToFirst();
+            Log.i(LOG, "User ID: " + String.valueOf(c.getInt(c.getColumnIndex(KEY_SU_ID))));
             return c.getInt(c.getColumnIndex(KEY_SU_ID));
+        }
+        else {
+            return -1;
+        }
+
+    }
+
+    public long checkUserEmailAndPass(String email, String pass) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + TABLE_STUDENT_USER + " WHERE "
+                + KEY_SU_EMAIL + " = \'" + email + "\';";
+
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        Log.i(LOG, "Count: " + String.valueOf(c.getCount()));
+        if (c != null && c.getCount()>0) {
+            c.moveToFirst();
+            String dbPass = c.getString(c.getColumnIndex(KEY_SU_PASSWORD));
+            if (dbPass.equals(pass)) {
+                Log.i(LOG, "User ID: " + String.valueOf(c.getInt(c.getColumnIndex(KEY_SU_ID))));
+                return c.getInt(c.getColumnIndex(KEY_SU_ID));
+            }
+            else {
+                return -1;
+            }
         }
         else {
             return -1;

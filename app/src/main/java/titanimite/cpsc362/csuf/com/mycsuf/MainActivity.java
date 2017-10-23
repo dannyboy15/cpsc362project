@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity
         View hView =  navigationView.getHeaderView(0);
 
         session = SessionManager.getInstance(getApplicationContext());
+        Log.i("MainActivity", session.toString());
 
         getUserInfo();
 
@@ -85,19 +86,19 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void getUserInfo() {
-        SharedPreferences pref = getSharedPreferences("TitanimitePref", Context.MODE_PRIVATE);
-        userName = pref.getString("firstName", "");
-        userName += " " + pref.getString("lastName", "");
-        userEmail = pref.getString("email", "");
+//        SharedPreferences pref = getSharedPreferences("TitanimitePref", Context.MODE_PRIVATE);
+        userName = session.getFirstName(); //pref.getString("firstName", "");
+        userName += " " + session.getLastName(); //pref.getString("lastName", "");
+        userEmail = session.getEmail(); //pref.getString("email", "");
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-        Log.i("Main Activty", "My Prefs: " + pref.getAll());
-        Log.i("Main Activty", "Default Prefs: " + prefs.getAll() + "\n" + prefs.getString("disp_name", "nothing there"));
-
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("example_text", userName);
-        editor.commit();
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+//
+//        Log.i("Main Activty", "My Prefs: " + pref.getAll());
+//        Log.i("Main Activty", "Default Prefs: " + prefs.getAll() + "\n" + prefs.getString("disp_name", "nothing there"));
+//
+//        SharedPreferences.Editor editor = prefs.edit();
+//        editor.putString("example_text", userName);
+//        editor.commit();
 
     }
 
@@ -190,11 +191,13 @@ public class MainActivity extends AppCompatActivity
 //            ft.commit();
 
         } else if (id == R.id.nav_logout) {
-            SharedPreferences pref = getApplicationContext().getSharedPreferences("TitanimitePref", MODE_PRIVATE);
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putBoolean("is_logged_in", false);
+//            SharedPreferences pref = getApplicationContext().getSharedPreferences("TitanimitePref", MODE_PRIVATE);
+//            SharedPreferences.Editor editor = pref.edit();
+//            editor.putBoolean("is_logged_in", false);
+//
+//            editor.commit();
 
-            editor.commit();
+            session.logoutUser();
 
             intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);

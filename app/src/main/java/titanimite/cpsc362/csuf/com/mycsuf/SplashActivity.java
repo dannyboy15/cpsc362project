@@ -15,23 +15,15 @@ public class SplashActivity extends AppCompatActivity {
 
         // Session Manager
         SessionManager session = SessionManager.getInstance(getApplicationContext());
-        Log.i("Splash Activity", session.toString());
 
         if (session.isLoggedIn()) {
             Intent intent = new Intent(this, MainActivity.class);
-//            intent.putExtra("session", session);
             startActivity(intent);
             finish();
         } else {
             Intent intent = new Intent(this, LoginActivity.class);
-//            intent.putExtra("session", session);
             startActivity(intent);
             finish();
         }
     }
-
-//    private boolean isLoggedIn() {
-//        SharedPreferences pref = getSharedPreferences("TitanimitePref", Context.MODE_PRIVATE);
-//        return pref.getBoolean("is_logged_in", false);
-//    }
 }
