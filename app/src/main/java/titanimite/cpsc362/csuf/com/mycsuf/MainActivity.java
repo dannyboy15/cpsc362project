@@ -21,7 +21,10 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ClassFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        ClassFragment.OnFragmentInteractionListener,
+        ProfFragment.OnFragmentInteractionListener, ProfInfoFragment.OnFragmentInteractionListener,
+        ClubsFragment.OnFragmentInteractionListener, ClubInfoFragment.OnFragmentInteractionListener {
 
     private String userName;
     private String userEmail;
