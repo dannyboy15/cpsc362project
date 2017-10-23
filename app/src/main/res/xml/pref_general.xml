@@ -12,15 +12,33 @@
         android:capitalize="words"
         android:defaultValue="@string/pref_default_display_name"
         android:inputType="textCapWords"
-        android:key="example_text"
+        android:key="user_first_name"
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="@string/pref_title_display_name" />
+        android:title="First Name" />
 
     <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
          dismiss it. -->
     <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:key="user_last_name"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Last Name" />
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:key="user_major"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Major" />
+    <EditTextPreference
+        android:defaultValue="blah"
+        android:key="user_email"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Email" />
     <ListPreference
         android:defaultValue="-1"
         android:entries="@array/pref_example_list_titles"

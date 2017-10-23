@@ -3,8 +3,6 @@ package titanimite.cpsc362.csuf.com.mycsuf;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -15,8 +13,6 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
@@ -52,6 +48,8 @@ public class ClassAdapter extends BaseAdapter implements View.OnClickListener {
 
     /******** What is the size of Passed Arraylist Size ************/
     public int getCount() {
+        if(data == null)
+            return 1;
         if(data.length() <= 0)
             return 1;
         return data.length();
@@ -78,8 +76,8 @@ public class ClassAdapter extends BaseAdapter implements View.OnClickListener {
 
             /****** View Holder Object to contain tabitem.xml file elements ******/
             holder = new ViewHolder();
-            holder.timeTV = (TextView) view.findViewById(R.id.classTime);
-            holder.nameTV=(TextView)view.findViewById(R.id.className);
+            holder.timeTV = (TextView) view.findViewById(R.id.profName);
+            holder.nameTV=(TextView)view.findViewById(R.id.profTime);
             holder.locationTV=(TextView)view.findViewById(R.id.classLocation);
 
             /************  Set holder with LayoutInflater ************/
@@ -118,7 +116,7 @@ public class ClassAdapter extends BaseAdapter implements View.OnClickListener {
 
             /******** Set Item Click Listner for LayoutInflater for each row *******/
 
-            view.setOnClickListener(this);
+//            view.setOnClickListener(this);
 
         return view;
 
@@ -135,7 +133,7 @@ public class ClassAdapter extends BaseAdapter implements View.OnClickListener {
 
         Intent intent = new Intent(context, ClassInfoFull.class);
         intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
-        intent.putextra("your_extra","your_class_value");
+//        intent.putextra("your_extra","your_class_value");
         context.startActivity(intent);
 
 //        finish();

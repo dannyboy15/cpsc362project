@@ -1,12 +1,25 @@
 package titanimite.cpsc362.csuf.com.mycsuf;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.app.ListFragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
+import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.List;
 
 
 /**
@@ -17,7 +30,7 @@ import android.view.ViewGroup;
  * Use the {@link ClubsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ClubsFragment extends Fragment {
+public class ClubsFragment extends ListFragment implements AdapterView.OnItemClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -28,6 +41,10 @@ public class ClubsFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    ListView listView;
+    ClubAdapter adapter;
+    JSONArray allClubs;
 
     public ClubsFragment() {
         // Required empty public constructor
@@ -58,14 +75,40 @@ public class ClubsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+//        loadSampleClubData();
+
+//        adapter = new ClubAdapter(getActivity(), getActivity().getApplication().getApplicationContext(), allClubs);
+//        setListAdapter(adapter);
+////        listView.setAdapter(adapter);
+//        getListView().setOnClickListener(this);
+    }
+
+    private void loadSampleClubData() {
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_clubs, container, false);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+//        ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(),
+//                R.array.Planets, android.R.layout.simple_list_item_1);
+//        setListAdapter(adapter);
+//        getListView().setOnItemClickListener(this);
+        getActivity().setTitle("Clubs");
+        adapter = new ClubAdapter(getActivity(), getActivity().getApplication().getApplicationContext());
+        setListAdapter(adapter);
+//        listView.setAdapter(adapter);
+        getListView().setOnItemClickListener(this);
     }
+
+//    @Override
+////    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+////                             Bundle savedInstanceState) {
+////        getActivity().setTitle("your title");
+////        // Inflate the layout for this fragment
+////        return inflater.inflate(R.layout.fragment_clubs, container, false);
+////    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -89,6 +132,27 @@ public class ClubsFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//        Toast toast = Toast.makeText(getActivity(), position, Toast.LENGTH_LONG);
+//        toast.show();
+        Log.i("Item clicked is at : ",  String.valueOf(position));
+        JSONObject info = adapter.getViewInfo(position);
+        Log.i("View Info",  info.toString());
+        Bundle bundle = new Bundle();
+        bundle.putInt("pos", position);
+        FragmentManager fm = getFragmentManager();
+        ClubInfoFragment clubInfoFragment = new ClubInfoFragment();
+        clubInfoFragment.setArguments(bundle);
+
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.contentArea, clubInfoFragment).addToBackStack(null);
+        ft.commit();
+
+
     }
 
     /**

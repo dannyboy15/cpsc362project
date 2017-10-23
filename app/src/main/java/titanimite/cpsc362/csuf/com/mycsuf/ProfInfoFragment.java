@@ -3,10 +3,15 @@ package titanimite.cpsc362.csuf.com.mycsuf;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
@@ -28,6 +33,8 @@ public class ProfInfoFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private JSONObject profInfo;
 
     public ProfInfoFragment() {
         // Required empty public constructor
@@ -58,7 +65,26 @@ public class ProfInfoFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        int position = getArguments().getInt("pos");
+        profInfo = new ProfData().getDataFor(position);
     }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        TextView tv = (TextView) getView().findViewById(R.id.profTime);
+        try {
+            tv.setText(profInfo.getString("name"));
+            getActivity().setTitle(profInfo.getString("name"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

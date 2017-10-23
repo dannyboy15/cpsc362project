@@ -5,15 +5,13 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.ShareCompat;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,38 +20,47 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class Main22Activity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener, ClassFragment.OnFragmentInteractionListener {
 
     private String userName;
     private String userEmail;
+    private SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Set layout
         setContentView(R.layout.activity_main22);
+
+        // Set toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        // Set Floating Action Button
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
+        // Set drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        // Set navigatio menu
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View hView =  navigationView.getHeaderView(0);
 
+        session = SessionManager.getInstance(getApplicationContext());
 
         getUserInfo();
 
@@ -65,13 +72,33 @@ public class Main22Activity extends AppCompatActivity
         TextView nav_email = (TextView)hView.findViewById(R.id.user_email);
         nav_email.setText(userEmail);
 
+        // Set classes fragment main fragment
+        // get fragment manager
+        FragmentManager fm = getFragmentManager();
+        ClassFragment classFragment = new ClassFragment();
+
+        // add
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.contentArea, classFragment);
+        ft.commit();
+
     }
 
     private void getUserInfo() {
         SharedPreferences pref = getSharedPreferences("TitanimitePref", Context.MODE_PRIVATE);
         userName = pref.getString("firstName", "");
-        userName = " " + pref.getString("lastName", "");
+        userName += " " + pref.getString("lastName", "");
         userEmail = pref.getString("email", "");
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        Log.i("Main Activty", "My Prefs: " + pref.getAll());
+        Log.i("Main Activty", "Default Prefs: " + prefs.getAll() + "\n" + prefs.getString("disp_name", "nothing there"));
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("example_text", userName);
+        editor.commit();
+
     }
 
     @Override
@@ -79,6 +106,12 @@ public class Main22Activity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+
+            if (getFragmentManager().getBackStackEntryCount() > 0) {
+                getFragmentManager().popBackStack();
+            } else {
+                super.onBackPressed();
+            }
         } else {
             super.onBackPressed();
         }
@@ -117,12 +150,20 @@ public class Main22Activity extends AppCompatActivity
         Intent intent;
 
         if (id == R.id.nav_classes) {
-            // Handle the camera action
-            intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_map) {
-            intent = new Intent(getApplicationContext(), MapActivity.class);
-            startActivity(intent);
+            FragmentManager fm = getFragmentManager();
+            ClassFragment classFragment = new ClassFragment();
+
+            // add
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.contentArea, classFragment);
+            ft.commit();
+        } else if (id == R.id.nav_prof) {
+            FragmentManager fm = getFragmentManager();
+            ProfFragment profFragment = new ProfFragment();
+
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.contentArea, profFragment);
+            ft.commit();
         } else if (id == R.id.nav_tutoring) {
 
         } else if (id == R.id.nav_clubs) {
@@ -165,5 +206,10 @@ public class Main22Activity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

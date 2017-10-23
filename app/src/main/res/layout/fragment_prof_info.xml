@@ -1,13 +1,194 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="titanimite.cpsc362.csuf.com.mycsuf.ProfInfoFragment">
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        <TextView
+            android:id="@+id/classNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:text="Professor"
+            android:textSize="56sp" />
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/profTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/classNum"
+            android:layout_alignStart="@+id/classNum"
+            android:layout_below="@+id/classNum"
+            android:text="Comp Sci"
+            android:textSize="24dp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/clubImg"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@id/profTime"
+            android:layout_marginEnd="15dp"
+            android:background="#fc2e76"
+            android:layout_marginRight="15dp" />
+
+        <TextView
+            android:id="@+id/daysText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/classNum"
+            android:layout_alignStart="@+id/classNum"
+            android:layout_below="@+id/profTime"
+            android:layout_marginTop="10dp"
+            android:text="Day(s)"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/days"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/daysText"
+            android:layout_alignRight="@id/clubImg"
+            android:text="M, W"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/startTimeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/classNum"
+            android:layout_alignStart="@+id/classNum"
+            android:layout_below="@+id/daysText"
+            android:layout_marginTop="5dp"
+            android:text="Start"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/startTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/startTimeText"
+            android:layout_alignRight="@id/clubImg"
+            android:text="08:00"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/endTimeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/classNum"
+            android:layout_alignStart="@+id/classNum"
+            android:layout_below="@+id/startTimeText"
+            android:layout_marginTop="5dp"
+            android:text="End"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/endTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/endTimeText"
+            android:layout_alignRight="@id/clubImg"
+            android:text="10:00"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/locationText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/classNum"
+            android:layout_alignStart="@+id/classNum"
+            android:layout_below="@+id/endTimeText"
+            android:layout_marginTop="5dp"
+            android:text="Place"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/locationText"
+            android:layout_alignRight="@id/clubImg"
+            android:text="CS 101"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/profText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/classNum"
+            android:layout_alignStart="@+id/classNum"
+            android:layout_below="@+id/locationText"
+            android:layout_marginTop="5dp"
+            android:text="Professor"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/prof"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/profText"
+            android:layout_alignRight="@id/clubImg"
+            android:text="Professor"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/tasksText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/classNum"
+            android:layout_alignStart="@+id/classNum"
+            android:layout_below="@+id/profText"
+            android:layout_marginTop="10dp"
+            android:text="Tasks"
+            android:textSize="24dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/homeworkText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/classNum"
+            android:layout_alignStart="@+id/classNum"
+            android:layout_below="@+id/tasksText"
+            android:text="Homework"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/homework"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/homeworkText"
+            android:layout_alignRight="@id/clubImg"
+            android:layout_marginTop="5dp"
+            android:text="1"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/examsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/classNum"
+            android:layout_alignStart="@+id/classNum"
+            android:layout_below="@+id/homeworkText"
+            android:text="Exams"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/exams"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/examsText"
+            android:layout_alignRight="@id/clubImg"
+            android:text="0"
+            android:textSize="24dp" />
+
+
+
+    </RelativeLayout>

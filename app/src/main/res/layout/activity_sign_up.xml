@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/welcome_text"
-        android:textSize="20dp" />
+        android:textSize="16sp"
+        android:visibility="gone" />
 
     <EditText
         android:id="@+id/firstNameTextEdit"
@@ -47,6 +48,24 @@
         android:ems="10"
         android:hint="Email"
         android:inputType="text|textEmailAddress" />
+
+    <EditText
+        android:id="@+id/passTextEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/verifyTextEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:ems="10"
+        android:hint="Verify Password"
+        android:inputType="textPassword" />
 
     <TextView
         android:id="@+id/tosTextView"

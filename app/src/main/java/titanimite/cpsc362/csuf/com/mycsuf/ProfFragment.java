@@ -1,12 +1,22 @@
 package titanimite.cpsc362.csuf.com.mycsuf;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.app.ListFragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.TextView;
+
+import org.json.JSONObject;
 
 
 /**
@@ -17,7 +27,7 @@ import android.view.ViewGroup;
  * Use the {@link ProfFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfFragment extends Fragment {
+public class ProfFragment extends ListFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -28,6 +38,10 @@ public class ProfFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    boolean fragmentAlreadyLoaded = false;
+
+    private ProfAdapter adapter;
 
     public ProfFragment() {
         // Required empty public constructor
@@ -52,6 +66,33 @@ public class ProfFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        getActivity().setTitle("Professors");
+        adapter = new ProfAdapter(getActivity(), getActivity().getApplication().getApplicationContext());
+        setListAdapter(adapter);
+//        listView.setAdapter(adapter);
+        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i("Item clicked is at : ",  String.valueOf(position));
+                JSONObject info = adapter.getViewInfo(position);
+                Log.i("View Info",  info.toString());
+                Bundle bundle = new Bundle();
+                bundle.putInt("pos", position);
+                FragmentManager fm = getFragmentManager();
+                ProfInfoFragment profInfoFragment = new ProfInfoFragment();
+                profInfoFragment.setArguments(bundle);
+
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.contentArea, profInfoFragment).addToBackStack(null);
+                ft.commit();
+            }
+        });
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -64,7 +105,7 @@ public class ProfFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_prof, container, false);
+        return inflater.inflate(R.layout.fragment_prof, null);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -3,10 +3,15 @@ package titanimite.cpsc362.csuf.com.mycsuf;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
@@ -28,6 +33,8 @@ public class ClubInfoFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private JSONObject clubInfo;
 
     public ClubInfoFragment() {
         // Required empty public constructor
@@ -58,6 +65,22 @@ public class ClubInfoFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        int position = getArguments().getInt("pos");
+        clubInfo = new ClubData().getDataFor(position);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        TextView tv = (TextView) getView().findViewById(R.id.clubName);
+        try {
+            tv.setText(clubInfo.getString("name"));
+            getActivity().setTitle(clubInfo.getString("name"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -65,6 +88,7 @@ public class ClubInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_club_info, container, false);
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

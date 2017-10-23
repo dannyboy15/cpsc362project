@@ -32,7 +32,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivityPrev extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView addClassMsg;
     Button addClassBtn;
@@ -150,9 +150,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_classes) {
             // Handle the camera action
-            intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent = new Intent(getApplicationContext(), MainActivityPrev.class);
             startActivity(intent);
-        } else if (id == R.id.nav_map) {
+        } else if (id == R.id.nav_prof) {
 
         } else if (id == R.id.nav_tutoring) {
 
@@ -199,11 +199,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void openDialog() {
-        LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
+        LayoutInflater inflater = LayoutInflater.from(MainActivityPrev.this);
         final View dialogView = inflater.inflate(R.layout.dialog_add_class, null);
 
         final TextView etName = (EditText) dialogView.findViewById(R.id.classNameTextEdit);
-        AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+        AlertDialog dialog = new AlertDialog.Builder(MainActivityPrev.this)
                 .setTitle("Add A Class")
                 .setView(dialogView)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {

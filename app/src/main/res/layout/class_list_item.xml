@@ -4,7 +4,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/classColor"
+        android:id="@+id/clubImg"
         android:layout_width="25dp"
         android:layout_height="75dp"
         android:layout_alignParentLeft="true"
@@ -13,41 +13,41 @@
         android:background="#fc2e76" />
 
     <TextView
-        android:id="@+id/classTimeFixed"
+        android:id="@+id/profNameFixed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/classColor"
-        android:layout_toRightOf="@+id/classColor"
+        android:layout_alignTop="@+id/clubImg"
+        android:layout_toRightOf="@+id/clubImg"
         android:text="Time: "
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/classTime"
+        android:id="@+id/profName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/classColor"
-        android:layout_toRightOf="@+id/classTimeFixed"
+        android:layout_alignTop="@+id/clubImg"
+        android:layout_toRightOf="@+id/profNameFixed"
         android:text="08:00 - 08:45"
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/className"
+        android:id="@+id/profTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/classTime"
+        android:layout_below="@+id/profName"
         android:layout_marginTop="5dp"
-        android:layout_toRightOf="@+id/classColor"
+        android:layout_toRightOf="@+id/clubImg"
         android:text="CPSC 362"
         android:textSize="16sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/classLocationFixed"
+        android:id="@+id/profLocationFixed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/className"
+        android:layout_below="@+id/profTime"
         android:layout_marginTop="5dp"
-        android:layout_toRightOf="@+id/classColor"
+        android:layout_toRightOf="@+id/clubImg"
         android:text="Location: "
         android:textSize="14sp" />
 
@@ -55,9 +55,9 @@
         android:id="@+id/classLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/className"
+        android:layout_below="@+id/profTime"
         android:layout_marginTop="5dp"
-        android:layout_toRightOf="@+id/classLocationFixed"
+        android:layout_toRightOf="@+id/profLocationFixed"
         android:text="CS 101"
         android:textSize="14sp" />
 

@@ -106,7 +106,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="Start time"
-            android:inputType="time" />
+            android:inputType="datetime" />
 
         <EditText
             android:id="@+id/endTimeEditText"

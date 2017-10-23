@@ -1,6 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants">
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/clubImg"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp"
+        android:background="#fc2e76"
+        android:clickable="false"
+        android:focusable="false"/>
+
+    <TextView
+        android:id="@+id/profTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/clubImg"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/clubImg"
+        android:text="CPSC 362"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/clubMeetDayFixed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/clubImg"
+        android:layout_below="@id/profTime"
+        android:text="Meets: "
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/clubMeetDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/clubMeetDayFixed"
+        android:layout_below="@id/profTime"
+        android:text="Mondays at 12pm"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/clubMeetPlaceFixed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/clubMeetDayFixed"
+        android:layout_toRightOf="@+id/clubImg"
+        android:layout_marginTop="5dp"
+        android:text="Meeting Place: "
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/clubMeetPlace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/clubMeetDayFixed"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/clubMeetPlaceFixed"
+        android:text="CS 101"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/clubLetter"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="C"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="60sp" />
+
+</RelativeLayout>

@@ -1,11 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="titanimite.cpsc362.csuf.com.mycsuf.MapView"
-    tools:showIn="@layout/activity_map_view">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+app:layout_behavior="@string/appbar_scrolling_view_behavior"
+tools:context="titanimite.cpsc362.csuf.com.mycsuf.MapActivity"
+tools:showIn="@layout/activity_map_view">
 
-</android.support.constraint.ConstraintLayout>
+<ImageView
+    android:id="@+id/mapImage"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:scaleType="centerCrop"
+    app:srcCompat="@drawable/map_image" />
+
+<ImageView
+    android:id="@+id/room101"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentEnd="true"
+    android:layout_alignParentRight="true"
+    android:layout_alignTop="@+id/room102A"
+    android:layout_marginEnd="67dp"
+    android:layout_marginRight="67dp"
+    android:visibility="invisible"
+    app:srcCompat="@drawable/ic_add_location_black_24dp" />
+
+<ImageView
+    android:id="@+id/room102A"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignLeft="@+id/room104"
+    android:layout_alignStart="@+id/room104"
+    android:layout_below="@+id/room104"
+    android:layout_marginTop="107dp"
+    android:visibility="invisible"
+    app:srcCompat="@drawable/ic_add_location_black_24dp" />
+
+<ImageView
+    android:id="@+id/room102B"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignLeft="@+id/room102A"
+    android:layout_alignStart="@+id/room102A"
+    android:layout_below="@+id/room102A"
+    android:layout_marginTop="36dp"
+    android:visibility="invisible"
+    app:srcCompat="@drawable/ic_add_location_black_24dp" />
+
+<ImageView
+    android:id="@+id/room104"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignLeft="@+id/room110A"
+    android:layout_alignStart="@+id/room110A"
+    android:layout_centerVertical="true"
+    android:visibility="invisible"
+    app:srcCompat="@drawable/ic_add_location_black_24dp" />
+
+<ImageView
+    android:id="@+id/room110A"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignLeft="@+id/room110B"
+    android:layout_alignStart="@+id/room110B"
+    android:layout_below="@+id/room110B"
+    android:layout_marginTop="42dp"
+    android:visibility="invisible"
+    app:srcCompat="@drawable/ic_add_location_black_24dp" />
+
+<ImageView
+    android:id="@+id/room110B"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
+    android:layout_marginLeft="61dp"
+    android:layout_marginStart="61dp"
+    android:layout_marginTop="24dp"
+    android:visibility="invisible"
+    app:srcCompat="@drawable/ic_add_location_black_24dp" />
+
+</RelativeLayout>
