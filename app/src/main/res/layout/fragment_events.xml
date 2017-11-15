@@ -1,0 +1,45 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="titanimite.cpsc362.csuf.com.mycsuf.EventsFragment"
+    android:orientation="vertical"
+    android:id="@+id/scrollView"
+    android:fillViewport="true">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewRecommend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Recommended for you!"
+                android:layout_margin="10dp"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@id/android:empty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:text="No events currently happening"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <ListView
+                android:id="@id/android:list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fadingEdge="vertical"
+                android:fadingEdgeLength="10dp"
+                android:longClickable="true"></ListView>
+
+        </LinearLayout>
+</ScrollView>
