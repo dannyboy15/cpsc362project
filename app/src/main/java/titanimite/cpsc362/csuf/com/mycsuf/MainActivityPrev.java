@@ -168,7 +168,7 @@ public class MainActivityPrev extends AppCompatActivity implements NavigationVie
             intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
             finish();
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_events) {
 
         }
 

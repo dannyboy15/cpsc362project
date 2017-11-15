@@ -24,7 +24,9 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         ClassFragment.OnFragmentInteractionListener,
         ProfFragment.OnFragmentInteractionListener, ProfInfoFragment.OnFragmentInteractionListener,
-        ClubsFragment.OnFragmentInteractionListener, ClubInfoFragment.OnFragmentInteractionListener {
+        ClubsFragment.OnFragmentInteractionListener, ClubInfoFragment.OnFragmentInteractionListener,
+        TutoringFragment.OnFragmentInteractionListener, ClassInfoFragment.OnFragmentInteractionListener,
+        NotesFragment.OnFragmentInteractionListener, EventsFragment.OnFragmentInteractionListener {
 
     private String userName;
     private String userEmail;
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Set navigatio menu
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -169,6 +172,12 @@ public class MainActivity extends AppCompatActivity
             ft.replace(R.id.contentArea, profFragment);
             ft.commit();
         } else if (id == R.id.nav_tutoring) {
+            FragmentManager fm = getFragmentManager();
+            TutoringFragment tutorFragment = new TutoringFragment();
+
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.contentArea, tutorFragment);
+            ft.commit();
 
         } else if (id == R.id.nav_clubs) {
             // get fragment manager
@@ -178,35 +187,29 @@ public class MainActivity extends AppCompatActivity
             // add
             FragmentTransaction ft = fm.beginTransaction();
             ft.replace(R.id.contentArea, clubsFragment);
-// alternatively add it with a tag
-// trx.add(R.id.your_placehodler, new YourFragment(), "detail");
             ft.commit();
 
-// replace
-//            FragmentTransaction ft = fm.beginTransaction();
-//            ft.replace(R.id.your_placehodler, new YourFragment());
-//            ft.commit();
-
-// remove
-//            Fragment fragment = fm.findFragmentById(R.id.your_placehodler);
-//            FragmentTransaction ft = fm.beginTransaction();
-//            ft.remove(fragment);
-//            ft.commit();
-
         } else if (id == R.id.nav_logout) {
-//            SharedPreferences pref = getApplicationContext().getSharedPreferences("TitanimitePref", MODE_PRIVATE);
-//            SharedPreferences.Editor editor = pref.edit();
-//            editor.putBoolean("is_logged_in", false);
-//
-//            editor.commit();
-
             session.logoutUser();
 
             intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
             finish();
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_events) {
+            FragmentManager fm = getFragmentManager();
+            EventsFragment eventsFragment = new EventsFragment();
 
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.contentArea, eventsFragment);
+            ft.commit();
+
+        } else if (id == R.id.nav_notes) {
+            FragmentManager fm = getFragmentManager();
+            NotesFragment notesFragment = new NotesFragment();
+
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.contentArea, notesFragment);
+            ft.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

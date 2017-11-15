@@ -4,7 +4,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/clubImg"
+        android:id="@+id/classImg"
         android:layout_width="25dp"
         android:layout_height="75dp"
         android:layout_alignParentLeft="true"
@@ -16,8 +16,8 @@
         android:id="@+id/profNameFixed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/clubImg"
-        android:layout_toRightOf="@+id/clubImg"
+        android:layout_alignTop="@+id/classImg"
+        android:layout_toRightOf="@+id/classImg"
         android:text="Time: "
         android:textSize="14sp" />
 
@@ -25,18 +25,18 @@
         android:id="@+id/profName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/clubImg"
+        android:layout_alignTop="@+id/classImg"
         android:layout_toRightOf="@+id/profNameFixed"
         android:text="08:00 - 08:45"
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/profTime"
+        android:id="@+id/className"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/profName"
         android:layout_marginTop="5dp"
-        android:layout_toRightOf="@+id/clubImg"
+        android:layout_toRightOf="@+id/classImg"
         android:text="CPSC 362"
         android:textSize="16sp"
         android:textStyle="bold" />
@@ -45,9 +45,9 @@
         android:id="@+id/profLocationFixed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/profTime"
+        android:layout_below="@+id/className"
         android:layout_marginTop="5dp"
-        android:layout_toRightOf="@+id/clubImg"
+        android:layout_toRightOf="@+id/classImg"
         android:text="Location: "
         android:textSize="14sp" />
 
@@ -55,7 +55,7 @@
         android:id="@+id/classLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/profTime"
+        android:layout_below="@+id/className"
         android:layout_marginTop="5dp"
         android:layout_toRightOf="@+id/profLocationFixed"
         android:text="CS 101"

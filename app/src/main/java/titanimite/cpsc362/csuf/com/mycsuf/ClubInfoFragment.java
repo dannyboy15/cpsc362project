@@ -1,13 +1,20 @@
 package titanimite.cpsc362.csuf.com.mycsuf;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -35,6 +42,10 @@ public class ClubInfoFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private JSONObject clubInfo;
+
+    private long id;
+    private DBHelper database;
+    private Club club;
 
     public ClubInfoFragment() {
         // Required empty public constructor
@@ -66,29 +77,80 @@ public class ClubInfoFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        int position = getArguments().getInt("pos");
-        clubInfo = new ClubData().getDataFor(position);
+        id = getArguments().getLong("id");
+        Log.i("Club Frag Info", String.valueOf(id));
+        database = DBHelper.getInstance(getActivity());
+        club = database.getClub(id);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TextView tv = (TextView) getView().findViewById(R.id.clubName);
-        try {
-            tv.setText(clubInfo.getString("name"));
-            getActivity().setTitle(clubInfo.getString("name"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        TextView clubNameTV = (TextView) getView().findViewById(R.id.nameTV);
+        TextView meetDateTV = (TextView) getView().findViewById(R.id.meetingDateTV);
+        TextView meetLocTV = (TextView) getView().findViewById(R.id.meetingLocTV);
+        TextView contactTV = (TextView) getView().findViewById(R.id.contactInfoTV);
+        TextView descTV = (TextView) getView().findViewById(R.id.descTv);
+
+        clubNameTV.setText(club.getClubName());
+        meetDateTV.setText(club.getMeetDay() + " at " + club.getMeetTime());
+        meetLocTV.setText(club.getMeetPlace());
+        contactTV.setText(club.getEmail());
+        descTV.setText(club.getDesc());
+
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_club_info, container, false);
+        View v = inflater.inflate(R.layout.fragment_club_info, container, false);
 
+        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               openDialog();
+
+            }
+        });
+
+
+
+        return v;
+
+    }
+
+    private void openDialog() {
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        final View dialogView = inflater.inflate(R.layout.dialog_send_email, null);
+
+        final EditText email = (EditText) dialogView.findViewById(R.id.emailTextEdit);
+        final EditText subject = (EditText) dialogView.findViewById(R.id.subjectTextEdit);
+        final EditText msg = (EditText) dialogView.findViewById(R.id.messageTextEdit);
+
+        email.setText(club.getEmail());
+        subject.setText("Would like info on " + club.getClubName());
+
+        AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                .setTitle("Send Email to " + club.getClubName())
+                .setView(dialogView)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("text/html");
+                        intent.putExtra(Intent.EXTRA_EMAIL, new String[] {email.getText().toString()});
+                        intent.putExtra(Intent.EXTRA_SUBJECT, subject.getText().toString());
+                        intent.putExtra(Intent.EXTRA_TEXT, msg.getText());
+
+                        startActivity(Intent.createChooser(intent, "Send Email to " + club.getClubName()));
+                    }
+                })
+                .setNegativeButton("Cancel", null).create();
+        dialog.show();
     }
 
     // TODO: Rename method, update argument and hook method into UI event

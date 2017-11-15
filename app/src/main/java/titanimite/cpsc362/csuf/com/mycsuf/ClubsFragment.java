@@ -42,6 +42,8 @@ public class ClubsFragment extends ListFragment implements AdapterView.OnItemCli
 
     private OnFragmentInteractionListener mListener;
 
+    private DBHelper database;
+
     ListView listView;
     ClubAdapter adapter;
     JSONArray allClubs;
@@ -76,6 +78,8 @@ public class ClubsFragment extends ListFragment implements AdapterView.OnItemCli
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        database = DBHelper.getInstance(getActivity());
+
 //        loadSampleClubData();
 
 //        adapter = new ClubAdapter(getActivity(), getActivity().getApplication().getApplicationContext(), allClubs);
@@ -96,7 +100,7 @@ public class ClubsFragment extends ListFragment implements AdapterView.OnItemCli
 //        setListAdapter(adapter);
 //        getListView().setOnItemClickListener(this);
         getActivity().setTitle("Clubs");
-        adapter = new ClubAdapter(getActivity(), getActivity().getApplication().getApplicationContext());
+        adapter = new ClubAdapter(getActivity(), getActivity().getApplication().getApplicationContext(), database);
         setListAdapter(adapter);
 //        listView.setAdapter(adapter);
         getListView().setOnItemClickListener(this);
@@ -139,11 +143,11 @@ public class ClubsFragment extends ListFragment implements AdapterView.OnItemCli
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //        Toast toast = Toast.makeText(getActivity(), position, Toast.LENGTH_LONG);
 //        toast.show();
-        Log.i("Item clicked is at : ",  String.valueOf(position));
-        JSONObject info = adapter.getViewInfo(position);
-        Log.i("View Info",  info.toString());
+        Log.i("Item clicked is at : ",  String.valueOf(id));
+//        JSONObject info = adapter.getViewInfo(position);
+//        Log.i("View Info",  info.toString());
         Bundle bundle = new Bundle();
-        bundle.putInt("pos", position);
+        bundle.putLong("id", id);
         FragmentManager fm = getFragmentManager();
         ClubInfoFragment clubInfoFragment = new ClubInfoFragment();
         clubInfoFragment.setArguments(bundle);

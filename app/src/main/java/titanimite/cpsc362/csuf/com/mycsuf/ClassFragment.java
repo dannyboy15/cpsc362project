@@ -1,25 +1,34 @@
 package titanimite.cpsc362.csuf.com.mycsuf;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.SurfaceTexture;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,7 +45,7 @@ import java.util.ArrayList;
  * Use the {@link ClassFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ClassFragment extends ListFragment implements AdapterView.OnItemClickListener {
+public class ClassFragment extends ListFragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -48,10 +57,15 @@ public class ClassFragment extends ListFragment implements AdapterView.OnItemCli
 
     private OnFragmentInteractionListener mListener;
 
+    ArrayList<Classes> allClassesArr;
     JSONArray allClasses;
     ListView listView;
     ClassAdapter adapter;
     TextView emptyText;
+
+    View.OnTouchListener touchListener;
+    private DBHelper database;
+    private SessionManager session;
 
     public ClassFragment() {
         // Required empty public constructor
@@ -84,18 +98,49 @@ public class ClassFragment extends ListFragment implements AdapterView.OnItemCli
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        getActivity().setTitle("Classes");
+        getActivity().setTitle("Schedule");
 
-        allClasses = new JSONArray();
+//        allClasses = new JSONArray();
+
+
+        loadUserClasses();
+
 
 //        getSampleData();
 
-        adapter = new ClassAdapter(getActivity(), getActivity().getApplication().getApplicationContext(), allClasses);
+
+        touchListener = new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Snackbar.make(getView(), "Touched", Snackbar.LENGTH_SHORT)
+                        .setAction("Action", null).show();
+
+                return false;
+            }
+        };
+
+
+        adapter = new ClassAdapter(getActivity(), getActivity().getApplication().getApplicationContext(), allClassesArr);
+        ListView ls = (ListView) getView().findViewById(android.R.id.list);
+//        ls.setAdapter(adapter);
+//        ls.setOnItemClickListener(this);
         setListAdapter(adapter);
         getListView().setOnItemClickListener(this);
+        getListView().setOnItemLongClickListener(this);
 
-//        final View emptyView = getView().findViewById(android.R.id.empty);
+//        getListView().setOnTouchListener(touchListener);
+//        getListView().setOnScrollListener(touchListener);
+
+
+//        Log.i("Class Fragement", String.valueOf(getListView().getId()));
+//        if(allClasses.length() < 1){
+//            ls.setVisibility(View.GONE);
+//        }
+
+
+//        final View emptyView = getActivity().getLayoutInflater().inflate(R.layout.empty_view, null);
 //        getListView().setEmptyView(emptyView);
+
 
     }
 
@@ -117,10 +162,54 @@ public class ClassFragment extends ListFragment implements AdapterView.OnItemCli
 
 //        emptyText = (TextView) v.findViewById(android.R.id.empty);
 
-        testDB();
+//        testDB();
 
 
         return v;
+    }
+
+    private void loadUserClasses() {
+
+        long userId = session.getUserId();
+
+        StudentUser s = database.getStudentUser(userId);
+        ArrayList<String> classArr = s.getClassIds(0);
+        Log.i("Class Fragment:", classArr.toString());
+//        allClasses = new JSONArray();
+        allClassesArr = new ArrayList<Classes>();
+
+        Log.i("Class Frag", "Num of classes: " + String.valueOf(classArr.size()));
+
+        if(classArr.size() > 0) {
+            for(String str: classArr) {
+                if(str.isEmpty())
+                    break;
+                long classId = Long.parseLong(str);
+
+                Classes mClass = database.getClass(classId);
+                allClassesArr.add(mClass);
+//                JSONObject jsonClass = new JSONObject();
+//                try {
+//                    jsonClass.put("name", mClass.getClassName());
+//                    jsonClass.put("num", mClass.getClassNumber());
+//                    jsonClass.put("startTime", mClass.getClassStartTime());
+//                    jsonClass.put("endTime", mClass.getClassEndTime());
+//                    jsonClass.put("prof", mClass.getClassProf());
+//                    jsonClass.put("room", mClass.getClassRoom());
+//                    jsonClass.put("description", mClass.getClassDesc());
+//
+//                    ArrayList<String> daysArr = mClass.getClassDays(0);
+//
+//                    jsonClass.put("days", new JSONArray(daysArr));
+//                    allClasses.put(jsonClass);
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+
+            }
+        }
+
     }
 
     private void testDB() {
@@ -142,6 +231,13 @@ public class ClassFragment extends ListFragment implements AdapterView.OnItemCli
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+        database = DBHelper.getInstance(getActivity().getApplicationContext());
+        session = SessionManager.getInstance(getActivity().getApplicationContext());
+        Log.i("ClassFragment", "db and session initialized");
+        Log.i("ClassFragment", session.toString());
+        Log.i("ClassFragment", database.toString());
 
 
 
@@ -167,9 +263,10 @@ public class ClassFragment extends ListFragment implements AdapterView.OnItemCli
     }
 
     private void updateClasses(View view) {
-        JSONObject newClass = getData(view);
+        Classes newClass = getData(view, 0);
         Log.d("TAG", newClass.toString());
-        allClasses.put(newClass);
+//        allClasses.put(newClass);
+        allClassesArr.add(newClass);
         adapter.notifyDataSetChanged();
 //        addClassMsg.setText(allClasses.toString());
     }
@@ -189,6 +286,24 @@ public class ClassFragment extends ListFragment implements AdapterView.OnItemCli
         String descriptionTxt = ((EditText)dialog.findViewById(R.id.descriptionEditText))
                 .getText().toString();
 
+        long classId = database.checkClassExist(classNameTxt);
+        Log.i("ClassFragment", String.valueOf(classId));
+        if(classId == -1) {
+            Classes mclass = new Classes(classNameTxt, classNumTxt, daysArr, startTimeTxt,
+                    endTimeTxt, profTxt, roomTxt, descriptionTxt);
+
+            classId = database.insertClass(mclass);
+        }
+
+        long userId = session.getUserId();
+
+        StudentUser s = database.getStudentUser(userId);
+        s.addClassId(classId);
+        Log.i("ClassFragment", s.toString());
+        database.updateStudentUser(s);
+
+
+
         JSONObject jsonClass = new JSONObject();
         try {
             jsonClass.put("name", classNameTxt);
@@ -199,12 +314,50 @@ public class ClassFragment extends ListFragment implements AdapterView.OnItemCli
             jsonClass.put("room", roomTxt);
             jsonClass.put("description", descriptionTxt);
             jsonClass.put("days", new JSONArray(daysArr));
+            jsonClass.put("class_id", classId);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         return jsonClass;
+    }
+
+    private Classes getData(View dialog, int i) {
+        String classNameTxt = ((EditText)dialog.findViewById(R.id.classNameTextEdit)).getText().toString();
+        String classNumTxt = ((EditText)dialog.findViewById(R.id.classNumTextEdit)).getText().toString();
+        ArrayList<String> daysArr  = getCheckedBoxes(dialog);
+        String startTimeTxt = ((EditText)dialog.findViewById(R.id.startTimeEditText))
+                .getText().toString();
+        String endTimeTxt = ((EditText)dialog.findViewById(R.id.endTimeEditText))
+                .getText().toString();
+        String profTxt = ((EditText)dialog.findViewById(R.id.profNameTextEdit))
+                .getText().toString();
+        String roomTxt = ((EditText)dialog.findViewById(R.id.roomTextEdit))
+                .getText().toString();
+        String descriptionTxt = ((EditText)dialog.findViewById(R.id.descriptionEditText))
+                .getText().toString();
+
+        Classes mclass = new Classes();
+        long classId = database.checkClassExist(classNameTxt);
+        Log.i("ClassFragment", String.valueOf(classId));
+        if(classId == -1) {
+             mclass = new Classes(classNameTxt, classNumTxt, daysArr, startTimeTxt,
+                    endTimeTxt, profTxt, roomTxt, descriptionTxt);
+
+            classId = database.insertClass(mclass);
+            mclass.setId(classId);
+        }
+
+        long userId = session.getUserId();
+
+        StudentUser s = database.getStudentUser(userId);
+        s.addClassId(classId);
+        Log.i("ClassFragment", s.toString());
+        database.updateStudentUser(s);
+
+
+        return mclass;
     }
 
     private ArrayList<String> getCheckedBoxes(View dialog) {
@@ -273,10 +426,38 @@ public class ClassFragment extends ListFragment implements AdapterView.OnItemCli
         mListener = null;
     }
 
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//        Snackbar.make(getView(), "Item touched: " + String.valueOf(id), Snackbar.LENGTH_SHORT)
+//                .setAction("Action", null).show();
+
+        Log.i("Class Frag", String.valueOf(id));
+        Bundle bundle = new Bundle();
+        bundle.putLong("id", id);
+        FragmentManager fm = getFragmentManager();
+        ClassInfoFragment classInfoFragment = new ClassInfoFragment();
+        classInfoFragment.setArguments(bundle);
+
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.contentArea, classInfoFragment).addToBackStack(null);
+        ft.commit();
+
 
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//        Snackbar.make(getView(), "Long clicked: " + String.valueOf(position), Snackbar.LENGTH_SHORT)
+//                .setAction("Action", null).show();
+//
+//        allClasses.remove(position);
+//        adapter.notifyDataSetChanged();
+//
+        return false;
+    }
+
 
     /**
      * This interface must be implemented by activities that contain this

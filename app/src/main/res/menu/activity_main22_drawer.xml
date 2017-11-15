@@ -4,32 +4,44 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_classes"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_view_list"
             android:title="Schedule" />
         <item
             android:id="@+id/nav_prof"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_person"
             android:title="Professor Info" />
         <item
-            android:id="@+id/nav_tutoring"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Tutoring" />
+            android:id="@+id/nav_notes"
+            android:icon="@drawable/ic_note_add"
+            android:title="Notes" />
         <item
-            android:id="@+id/nav_clubs"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Clubs" />
+            android:id="@+id/nav_events"
+            android:icon="@drawable/ic_stars"
+            android:title="Happening Now" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Resources">
         <menu>
             <item
-                android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Logout" />
+                android:id="@+id/nav_tutoring"
+                android:icon="@drawable/ic_school"
+                android:title="Tutoring" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/nav_study_areas"
+                android:icon="@drawable/ic_laptop_chromebook"
+                android:title="Study Areas" />
+            <item
+                android:id="@+id/nav_clubs"
+                android:icon="@drawable/ic_people"
+                android:title="Clubs" />
+        </menu>
+    </item>
+    <item android:title="Account" >
+        <menu >
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_power_settings_new"
+                android:title="Logout" />
         </menu>
     </item>
 

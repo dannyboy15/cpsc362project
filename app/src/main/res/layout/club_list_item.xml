@@ -5,7 +5,7 @@
     android:descendantFocusability="blocksDescendants">
 
     <ImageView
-        android:id="@+id/clubImg"
+        android:id="@+id/classImg"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_alignParentLeft="true"
@@ -16,12 +16,12 @@
         android:focusable="false"/>
 
     <TextView
-        android:id="@+id/profTime"
+        android:id="@+id/className"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/clubImg"
+        android:layout_alignTop="@+id/classImg"
         android:layout_marginTop="5dp"
-        android:layout_toRightOf="@+id/clubImg"
+        android:layout_toRightOf="@+id/classImg"
         android:text="CPSC 362"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -30,8 +30,8 @@
         android:id="@+id/clubMeetDayFixed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/clubImg"
-        android:layout_below="@id/profTime"
+        android:layout_toRightOf="@+id/classImg"
+        android:layout_below="@id/className"
         android:text="Meets: "
         android:textSize="14sp" />
 
@@ -40,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/clubMeetDayFixed"
-        android:layout_below="@id/profTime"
+        android:layout_below="@id/className"
         android:text="Mondays at 12pm"
         android:textSize="14sp" />
 
@@ -49,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/clubMeetDayFixed"
-        android:layout_toRightOf="@+id/clubImg"
+        android:layout_toRightOf="@+id/classImg"
         android:layout_marginTop="5dp"
         android:text="Meeting Place: "
         android:textSize="14sp" />

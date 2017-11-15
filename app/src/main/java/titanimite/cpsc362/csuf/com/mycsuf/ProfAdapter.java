@@ -2,19 +2,15 @@ package titanimite.cpsc362.csuf.com.mycsuf;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
  * Created by Daniel on 10/2/17.
@@ -90,7 +86,7 @@ public class ProfAdapter extends BaseAdapter implements View.OnClickListener {
             /****** View Holder Object to contain tabitem.xml file elements ******/
             holder = new ViewHolder();
             holder.nameTV = (TextView) view.findViewById(R.id.profName);
-            holder.timeTV=(TextView)view.findViewById(R.id.profTime);
+            holder.timeTV=(TextView)view.findViewById(R.id.className);
             holder.locationTV=(TextView)view.findViewById(R.id.profLocation);
 
             /************  Set holder with LayoutInflater ************/

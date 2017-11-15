@@ -9,7 +9,6 @@ import android.os.Parcelable;
 import java.util.HashMap;
 import java.util.UUID;
 
-import static android.content.Context.CONNECTIVITY_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
@@ -26,7 +25,10 @@ public class SessionManager implements Parcelable {
     // All Shared Preferences Keys
     private static final String IS_LOGIN = "IsLoggedIn";
 
-    private static final String KEY_SU_ID = "id";
+    private static final String KEY_SESSION_ID = "seesion_id";
+
+    // User id (make variable public to access from outside)
+    public static final String KEY_SU_ID = "user_id";
 
     // User name (make variable public to access from outside)
     public static final String KEY_FIRST_NAME = "first_name";
@@ -50,6 +52,8 @@ public class SessionManager implements Parcelable {
 
     private String sessionId;
 
+    private long userId;
+
     private String firstName;
 
     private String lastName;
@@ -58,13 +62,15 @@ public class SessionManager implements Parcelable {
 
     private StudentUser student;
 
+    private static int counter = 0;
+
     public static synchronized SessionManager getInstance(Context context) {
 
         // Use the application context, which will ensure that you
         // don't accidentally leak an Activity's context.
         // See this article for more information: http://bit.ly/6LRzfx
         if (session == null) {
-            session = new SessionManager(context);
+            session = new SessionManager(context.getApplicationContext());
         }
         return session;
     }
@@ -106,7 +112,7 @@ public class SessionManager implements Parcelable {
         editor.putBoolean(IS_LOGIN, true);
 
         // Storing name in pref
-        editor.putInt(KEY_SU_ID, id);
+        editor.putInt(KEY_SESSION_ID, id);
 
         // Storing name in pref
         editor.putString(KEY_FIRST_NAME, firstName);
@@ -125,8 +131,11 @@ public class SessionManager implements Parcelable {
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
+        editor.putInt(KEY_SESSION_ID, counter);
+        counter++;
+
         // Storing name in pref
-        editor.putInt(KEY_SU_ID, s.getId());
+        editor.putLong(KEY_SU_ID, s.getId());
 
         // Storing name in pref
         editor.putString(KEY_FIRST_NAME, s.getFirstName());
@@ -222,6 +231,10 @@ public class SessionManager implements Parcelable {
 
     public boolean isLoggedIn(){
         return pref.getBoolean(IS_LOGIN, false);
+    }
+
+    public long getUserId() {
+        return pref.getLong(KEY_SU_ID, -1);
     }
 
     public String getFirstName() {

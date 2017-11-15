@@ -17,7 +17,7 @@
             android:textSize="56sp" />
 
         <TextView
-            android:id="@+id/profTime"
+            android:id="@+id/className"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/classNum"
@@ -28,12 +28,12 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/clubImg"
+            android:id="@+id/classImg"
             android:layout_width="85dp"
             android:layout_height="85dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignBottom="@id/profTime"
+            android:layout_alignBottom="@id/className"
             android:layout_marginEnd="15dp"
             android:background="#fc2e76"
             android:layout_marginRight="15dp" />
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/classNum"
             android:layout_alignStart="@+id/classNum"
-            android:layout_below="@+id/profTime"
+            android:layout_below="@+id/className"
             android:layout_marginTop="10dp"
             android:text="Day(s)"
             android:textSize="24dp" />
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/daysText"
-            android:layout_alignRight="@id/clubImg"
+            android:layout_alignRight="@id/classImg"
             android:text="M, W"
             android:textSize="24dp" />
 
@@ -74,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/startTimeText"
-            android:layout_alignRight="@id/clubImg"
+            android:layout_alignRight="@id/classImg"
             android:text="08:00"
             android:textSize="24dp" />
 
@@ -94,7 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/endTimeText"
-            android:layout_alignRight="@id/clubImg"
+            android:layout_alignRight="@id/classImg"
             android:text="10:00"
             android:textSize="24dp" />
 
@@ -114,7 +114,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/locationText"
-            android:layout_alignRight="@id/clubImg"
+            android:layout_alignRight="@id/classImg"
             android:text="CS 101"
             android:textSize="24dp" />
 
@@ -134,7 +134,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/profText"
-            android:layout_alignRight="@id/clubImg"
+            android:layout_alignRight="@id/classImg"
             android:text="Professor"
             android:textSize="24dp" />
 
@@ -165,7 +165,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/homeworkText"
-            android:layout_alignRight="@id/clubImg"
+            android:layout_alignRight="@id/classImg"
             android:layout_marginTop="5dp"
             android:text="1"
             android:textSize="24dp" />
@@ -185,7 +185,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/examsText"
-            android:layout_alignRight="@id/clubImg"
+            android:layout_alignRight="@id/classImg"
             android:text="0"
             android:textSize="24dp" />
 

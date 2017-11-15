@@ -74,7 +74,7 @@ public class ProfInfoFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TextView tv = (TextView) getView().findViewById(R.id.profTime);
+        TextView tv = (TextView) getView().findViewById(R.id.className);
         try {
             tv.setText(profInfo.getString("name"));
             getActivity().setTitle(profInfo.getString("name"));
